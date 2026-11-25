@@ -1,6 +1,6 @@
 {
   "name": "@runeazy/devkit-checks",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "RunEazy's repository checks: cloud-terms and dependency-rule, as the runeazy-check command",
   "license": "Apache-2.0",
   "type": "module",
