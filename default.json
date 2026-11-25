@@ -85,7 +85,7 @@
   "customManagers": [
     {
       "customType": "regex",
-      "description": "devkit run by exact version through npx: `@runeazy/devkit-checks@X.Y.Z` in package.json scripts and workflows",
+      "description": "devkit run by exact version through pnpm dlx: `@runeazy/devkit-checks@X.Y.Z` in package.json scripts and workflows",
       "managerFilePatterns": ["/(^|/)package\\.json$/", "/^\\.github/workflows/[^/]+\\.ya?ml$/"],
       "matchStrings": ["(?<depName>@runeazy/devkit-[a-z]+)@(?<currentValue>\\d+\\.\\d+\\.\\d+)"],
       "datasourceTemplate": "npm"

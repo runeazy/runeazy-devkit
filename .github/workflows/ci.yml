@@ -14,14 +14,25 @@ jobs:
   dco:
     if: github.event_name == 'pull_request'
     uses: runeazy/.github/.github/workflows/dco.yml@v1
+  # Inline, not runeazy/.github's node.yml@v1: that reusable workflow runs npm (npm ci against
+  # package-lock.json). Go back to it once it runs pnpm.
   node:
-    uses: runeazy/.github/.github/workflows/node.yml@v1
-    permissions:
-      contents: read
-      packages: read
-    with:
-      scripts: lint format test
-      read-packages: false
+    # The ruleset requires the check "node / node", the name node.yml@v1's job reported
+    # under; keep it until this job goes back to the reusable workflow.
+    name: node / node
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      # pnpm, at the version in package.json's packageManager.
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run lint
+      - run: pnpm run format
+      - run: pnpm test
   repo-checks:
     runs-on: ubuntu-latest
     steps:

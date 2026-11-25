@@ -1,0 +1,11 @@
+packages:
+  - packages/*
+
+# Skip the release-age wait for:
+# - RunEazy's own @runeazy/* packages, as in Renovate (design 0043:
+#   minimumReleaseAge 0 for @runeazy/*): released by us, consumed the same day.
+# - @types/node@26.6.7: pinned by the imported npm lockfile; added by pnpm import.
+#   Drop it once that version is older than the wait.
+minimumReleaseAgeExclude:
+  - '@runeazy/*'
+  - '@types/node@26.6.7'
