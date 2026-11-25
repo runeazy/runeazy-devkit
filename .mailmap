@@ -1,0 +1,3 @@
+# Show one identity for the founder in git log, shortlog and blame.
+# Commits before 2026-11-25 used a personal address; they are not rewritten.
+Murugan Kannan <murugan.kannan@runeazy.com> <machaendran9221@gmail.com>
