@@ -1,0 +1,5 @@
+{
+  "cloudTerms": {
+    "exempt": ["packages/devkit-checks/src/cloud-terms.mjs", "packages/devkit-checks/test/**"]
+  }
+}

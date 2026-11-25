@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    uses: runeazy/.github/.github/workflows/checks.yml@v1
+  dco:
+    if: github.event_name == 'pull_request'
+    uses: runeazy/.github/.github/workflows/dco.yml@v1
+  node:
+    uses: runeazy/.github/.github/workflows/node.yml@v1
+    permissions:
+      contents: read
+      packages: read
+    with:
+      scripts: lint format test
+      read-packages: false
+  repo-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      # devkit runs its own checks from source: they need no install.
+      - run: node packages/devkit-checks/src/cli.mjs cloud-terms ${{ github.event_name == 'pull_request' && format('--base={0}', github.event.pull_request.base.sha) || '' }}
+      - run: node packages/devkit-checks/src/cli.mjs dependency-rule

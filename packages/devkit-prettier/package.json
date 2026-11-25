@@ -1,0 +1,28 @@
+{
+  "name": "@runeazy/devkit-prettier",
+  "version": "0.0.0",
+  "description": "RunEazy's shared Prettier config",
+  "license": "Apache-2.0",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/runeazy/runeazy-devkit.git",
+    "directory": "packages/devkit-prettier"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "exports": {
+    ".": "./index.mjs"
+  },
+  "files": [
+    "index.mjs"
+  ],
+  "peerDependencies": {
+    "prettier": "^3.0.0"
+  }
+}

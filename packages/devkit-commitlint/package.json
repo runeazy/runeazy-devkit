@@ -1,0 +1,31 @@
+{
+  "name": "@runeazy/devkit-commitlint",
+  "version": "0.0.0",
+  "description": "RunEazy's commitlint config: Conventional Commits",
+  "license": "Apache-2.0",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/runeazy/runeazy-devkit.git",
+    "directory": "packages/devkit-commitlint"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "exports": {
+    ".": "./index.mjs"
+  },
+  "files": [
+    "index.mjs"
+  ],
+  "dependencies": {
+    "@commitlint/config-conventional": "^20.0.0"
+  },
+  "peerDependencies": {
+    "@commitlint/cli": ">=19"
+  }
+}

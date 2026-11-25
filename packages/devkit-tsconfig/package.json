@@ -1,0 +1,26 @@
+{
+  "name": "@runeazy/devkit-tsconfig",
+  "version": "0.0.0",
+  "description": "RunEazy's shared TypeScript strictness",
+  "license": "Apache-2.0",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/runeazy/runeazy-devkit.git",
+    "directory": "packages/devkit-tsconfig"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "exports": {
+    "./base": "./base.json",
+    "./base.json": "./base.json"
+  },
+  "files": [
+    "base.json"
+  ]
+}

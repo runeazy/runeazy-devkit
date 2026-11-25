@@ -1,0 +1,10 @@
+{
+  "//": "RunEazy's TypeScript strictness. A project's tsconfig extends \"@runeazy/devkit-tsconfig/base\" and adds its own target, module, lib, jsx and paths.",
+  "compilerOptions": {
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
+  }
+}

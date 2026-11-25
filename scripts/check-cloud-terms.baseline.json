@@ -1,0 +1,4 @@
+{
+  "$comment": "Lines naming Google Cloud, per file. It may only shrink: run `npx runeazy-check cloud-terms --prune` after removing some.",
+  "files": {}
+}

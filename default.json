@@ -1,0 +1,85 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "RunEazy's Renovate preset. A repository's renovate.json: { \"extends\": [\"github>runeazy/runeazy-devkit\"] }",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    "group:monorepos",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "labels": ["dependencies"],
+  "schedule": ["before 9am on monday"],
+  "npm": {
+    "minimumReleaseAge": "3 days"
+  },
+  "vulnerabilityAlerts": {
+    "labels": ["security"],
+    "automerge": true
+  },
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true
+  },
+  "packageRules": [
+    {
+      "description": "Third-party minors and patches automerge on green CI",
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true,
+      "platformAutomerge": true
+    },
+    {
+      "description": "Majors always wait for a person",
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "addLabels": ["major-update"]
+    },
+    {
+      "description": "RunEazy's own packages: one PR per release stream, as soon as it's released",
+      "matchPackageNames": ["@runeazy/**", "com.runeazy:**"],
+      "minimumReleaseAge": "0 days",
+      "schedule": ["at any time"]
+    },
+    {
+      "matchPackageNames": ["@runeazy/devkit-*"],
+      "groupName": "runeazy devkit"
+    },
+    {
+      "matchPackageNames": [
+        "@runeazy/node",
+        "@runeazy/react",
+        "@runeazy/web-ui",
+        "@runeazy/design-tokens",
+        "com.runeazy:**"
+      ],
+      "groupName": "runeazy sdk"
+    },
+    {
+      "matchPackageNames": [
+        "@runeazy/database",
+        "@runeazy/nestjs",
+        "@runeazy/tenancy",
+        "@runeazy/telemetry",
+        "@runeazy/workload",
+        "@runeazy/tasks",
+        "@runeazy/identity"
+      ],
+      "groupName": "runeazy server kit"
+    },
+    {
+      "matchPackageNames": ["@runeazy/payments"],
+      "groupName": "runeazy payments"
+    },
+    {
+      "description": "At 0.x a minor may break: only patches of RunEazy's packages automerge",
+      "matchPackageNames": ["@runeazy/**", "com.runeazy:**"],
+      "matchCurrentVersion": "<1.0.0",
+      "matchUpdateTypes": ["minor", "major"],
+      "automerge": false
+    },
+    {
+      "description": "RunEazy's reusable workflows move by tag",
+      "matchPackageNames": ["runeazy/.github"],
+      "automerge": false
+    }
+  ]
+}

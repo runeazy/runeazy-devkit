@@ -1,0 +1,31 @@
+{
+  "name": "@runeazy/devkit-checks",
+  "version": "0.0.0",
+  "description": "RunEazy's repository checks: cloud-terms and dependency-rule, as the runeazy-check command",
+  "license": "Apache-2.0",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/runeazy/runeazy-devkit.git",
+    "directory": "packages/devkit-checks"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "runeazy-check": "./src/cli.mjs"
+  },
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  }
+}
