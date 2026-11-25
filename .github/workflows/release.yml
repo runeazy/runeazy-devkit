@@ -33,16 +33,26 @@ jobs:
     environment: release
     permissions:
       contents: read
-      packages: write
+      packages: write # GitHub Packages
+      id-token: write # npmjs trusted publishing and provenance: no npm token is stored
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
-          registry-url: https://npm.pkg.github.com
-          scope: '@runeazy'
+      - run: npm install -g npm@latest # trusted publishing needs npm 11.5.1 or later
       - run: npm ci --ignore-scripts
       - run: npm test
-      - run: npm publish --workspaces --ignore-scripts
+      # Public users install from npmjs. Turned on by the repository variable NPMJS_TRUSTED once
+      # each package's trusted publisher is set on npmjs (the first publish is by hand).
+      - name: Publish to npmjs
+        if: vars.NPMJS_TRUSTED == 'true'
+        run: npm publish --workspaces --ignore-scripts --access public --provenance --registry https://registry.npmjs.org
+      # RunEazy's repositories map @runeazy to GitHub Packages, where the SDK lives until it goes
+      # public, so devkit is there too.
+      - name: Publish to GitHub Packages
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" > "$RUNNER_TEMP/.npmrc"
+          npm publish --workspaces --ignore-scripts --registry https://npm.pkg.github.com --userconfig "$RUNNER_TEMP/.npmrc"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

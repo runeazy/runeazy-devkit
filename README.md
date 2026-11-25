@@ -16,7 +16,14 @@ workflows.
 
 ## Install
 
-The packages are on GitHub Packages. Map the scope once in the repository's `.npmrc`:
+The packages are published to npmjs, so anyone installs them with no token:
+
+```bash
+npm install --save-dev @runeazy/devkit-checks
+```
+
+RunEazy's own repositories map `@runeazy` to GitHub Packages while the SDK is there, so every
+release is published to both registries at the same version. In such a repository:
 
 ```ini
 @runeazy:registry=https://npm.pkg.github.com
@@ -63,7 +70,8 @@ Each repository keeps only its own data: a baseline file and `runeazy-checks.jso
 ## Releasing
 
 All packages share one version. Commits are Conventional Commits; release-please keeps a release
-PR open, and merging it tags `vX.Y.Z`, writes `CHANGELOG.md` and publishes. A published version
+PR open, and merging it tags `vX.Y.Z`, writes `CHANGELOG.md` and publishes to npmjs (trusted
+publishing, with provenance) and GitHub Packages. A published version
 is never unpublished: a bad one is deprecated and fixed by a patch.
 
 ## Licence
