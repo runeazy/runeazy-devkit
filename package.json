@@ -1,6 +1,6 @@
 {
   "name": "runeazy-devkit",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "description": "RunEazy's shared tooling: checks, configs and the Renovate preset",
   "license": "Apache-2.0",

@@ -1,6 +1,6 @@
 {
   "name": "@runeazy/devkit-prettier",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "RunEazy's shared Prettier config",
   "license": "Apache-2.0",
   "type": "module",
