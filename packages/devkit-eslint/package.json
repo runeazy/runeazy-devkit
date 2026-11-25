@@ -1,6 +1,6 @@
 {
   "name": "@runeazy/devkit-eslint",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "RunEazy's shared ESLint flat config for TypeScript (and React)",
   "license": "Apache-2.0",
   "type": "module",

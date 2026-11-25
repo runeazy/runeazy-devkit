@@ -1,6 +1,6 @@
 {
   "name": "@runeazy/devkit-commitlint",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "RunEazy's commitlint config: Conventional Commits",
   "license": "Apache-2.0",
   "type": "module",
