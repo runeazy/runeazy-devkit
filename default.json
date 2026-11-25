@@ -7,13 +7,19 @@
     "group:monorepos",
     "helpers:pinGitHubActionDigests"
   ],
-  "labels": ["dependencies"],
-  "schedule": ["before 9am on monday"],
+  "labels": [
+    "dependencies"
+  ],
+  "schedule": [
+    "before 9am on monday"
+  ],
   "npm": {
     "minimumReleaseAge": "3 days"
   },
   "vulnerabilityAlerts": {
-    "labels": ["security"],
+    "labels": [
+      "security"
+    ],
     "automerge": true
   },
   "lockFileMaintenance": {
@@ -23,24 +29,40 @@
   "packageRules": [
     {
       "description": "Third-party minors and patches automerge on green CI",
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
       "automerge": true,
       "platformAutomerge": true
     },
     {
       "description": "Majors always wait for a person",
-      "matchUpdateTypes": ["major"],
+      "matchUpdateTypes": [
+        "major"
+      ],
       "automerge": false,
-      "addLabels": ["major-update"]
+      "addLabels": [
+        "major-update"
+      ]
     },
     {
       "description": "RunEazy's own packages: one PR per release stream, as soon as it's released",
-      "matchPackageNames": ["@runeazy/**", "com.runeazy:**"],
+      "matchPackageNames": [
+        "@runeazy/**",
+        "com.runeazy:**"
+      ],
       "minimumReleaseAge": "0 days",
-      "schedule": ["at any time"]
+      "schedule": [
+        "at any time"
+      ]
     },
     {
-      "matchPackageNames": ["@runeazy/devkit-*"],
+      "matchPackageNames": [
+        "@runeazy/devkit-*"
+      ],
       "groupName": "runeazy devkit"
     },
     {
@@ -66,20 +88,44 @@
       "groupName": "runeazy server kit"
     },
     {
-      "matchPackageNames": ["@runeazy/payments"],
+      "matchPackageNames": [
+        "@runeazy/payments"
+      ],
       "groupName": "runeazy payments"
     },
     {
       "description": "At 0.x a minor may break: only patches of RunEazy's packages automerge",
-      "matchPackageNames": ["@runeazy/**", "com.runeazy:**"],
+      "matchPackageNames": [
+        "@runeazy/**",
+        "com.runeazy:**"
+      ],
       "matchCurrentVersion": "<1.0.0",
-      "matchUpdateTypes": ["minor", "major"],
+      "matchUpdateTypes": [
+        "minor",
+        "major"
+      ],
       "automerge": false
     },
     {
       "description": "RunEazy's reusable workflows move by tag",
-      "matchPackageNames": ["runeazy/.github"],
+      "matchPackageNames": [
+        "runeazy/.github"
+      ],
       "automerge": false
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "devkit run by exact version through npx: `@runeazy/devkit-checks@X.Y.Z` in package.json scripts and workflows",
+      "managerFilePatterns": [
+        "/(^|/)package\\.json$/",
+        "/^\\.github/workflows/[^/]+\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "(?<depName>@runeazy/devkit-[a-z]+)@(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ],
+      "datasourceTemplate": "npm"
     }
   ]
 }
