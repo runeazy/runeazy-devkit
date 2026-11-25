@@ -17,6 +17,9 @@ jobs:
   # Inline, not runeazy/.github's node.yml@v1: that reusable workflow runs npm (npm ci against
   # package-lock.json). Go back to it once it runs pnpm.
   node:
+    # The ruleset requires the check "node / node", the name node.yml@v1's job reported
+    # under; keep it until this job goes back to the reusable workflow.
+    name: node / node
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
