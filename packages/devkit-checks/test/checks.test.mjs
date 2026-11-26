@@ -34,6 +34,37 @@ test('cloud-terms: init, then a new line fails and a removed one is stale', () =
   assert.equal(cloudTerms(root, ['--prune'], quiet), 0)
 })
 
+const commit = (root) =>
+  execFileSync(
+    'git',
+    ['-c', 'user.name=t', '-c', 'user.email=t@example.com', 'commit', '-qm', 'base'],
+    { cwd: root },
+  )
+
+test('cloud-terms --base: a renamed file keeps its count; growing it still fails', () => {
+  const root = repo({ 'src/a.ts': 'const host = "x.run.app"\n' })
+  assert.equal(cloudTerms(root, ['--init'], quiet), 0)
+  execFileSync('git', ['add', '-A'], { cwd: root })
+  commit(root)
+
+  // The file moves, and its baseline entry with it: the same one line, so nothing grew.
+  mkdirSync(path.join(root, 'pkg'), { recursive: true })
+  execFileSync('git', ['mv', 'src/a.ts', 'pkg/a.ts'], { cwd: root })
+  const baseline = path.join(root, 'scripts/check-cloud-terms.baseline.json')
+  const moved = JSON.parse(readFileSync(baseline))
+  moved.files = { 'pkg/a.ts': 1 }
+  writeFileSync(baseline, JSON.stringify(moved, null, 2) + '\n')
+  execFileSync('git', ['add', '-A'], { cwd: root })
+  assert.equal(cloudTerms(root, ['--base=HEAD'], quiet), 0)
+
+  // Raising the moved file's entry is still the baseline growing.
+  writeFileSync(path.join(root, 'pkg/a.ts'), 'const host = "x.run.app"\nconst t = "pubsub"\n')
+  moved.files = { 'pkg/a.ts': 2 }
+  writeFileSync(baseline, JSON.stringify(moved, null, 2) + '\n')
+  execFileSync('git', ['add', '-A'], { cwd: root })
+  assert.equal(cloudTerms(root, ['--base=HEAD'], quiet), 1)
+})
+
 test('cloud-terms: allowTasks lets only Cloud Tasks through; exempt skips a file', () => {
   const root = repo({
     'runeazy-checks.json': JSON.stringify({

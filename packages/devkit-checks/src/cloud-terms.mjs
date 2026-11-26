@@ -26,6 +26,27 @@ import { clip, CONFIG_FILE, git, matcher, readConfig, trackedFiles } from './rep
 
 export const DEFAULT_BASELINE = 'scripts/check-cloud-terms.baseline.json'
 
+/**
+ * The baseline at `base`, with each file that git sees renamed since then under its new path: a moved file keeps its
+ * count, so moving it doesn't read as the baseline growing. A file renamed and changed is still compared, at its new
+ * path, against what it held.
+ */
+function followRenames(root, base, before) {
+  const moved = {}
+  for (const line of git(root, 'diff', '--find-renames', '--name-status', '--no-color', base).split(
+    '\n',
+  )) {
+    const [status, from, to] = line.split('\t')
+    if (status?.startsWith('R') && from && to) moved[from] = to
+  }
+  const after = {}
+  for (const [file, n] of Object.entries(before)) {
+    const now = moved[file] ?? file
+    after[now] = (after[now] ?? 0) + n
+  }
+  return after
+}
+
 export const CLOUD = new RegExp(
   [
     String.raw`metadata\.google\.internal`,
@@ -191,6 +212,7 @@ export function cloudTerms(root, argv = [], log = console.log) {
       log(`No ${baselinePath} at ${base}: this change adds it.`)
     }
     if (before) {
+      before = followRenames(root, base, before)
       const after = readBaseline(readFileSync(BASELINE, 'utf8'))
       for (const [file, n] of Object.entries(after)) {
         if (n > (before[file] ?? 0)) raised.push([file, n, before[file] ?? 0])
