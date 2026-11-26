@@ -15,9 +15,9 @@ jobs:
     steps:
       # The app's token, so CI runs on the release PR (a GITHUB_TOKEN-made PR starts no workflows).
       - id: app
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@v3
         with:
-          app-id: ${{ vars.AUTOMATION_APP_ID }}
+          client-id: ${{ vars.AUTOMATION_APP_CLIENT_ID }}
           private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
       - id: release
         uses: googleapis/release-please-action@v4
