@@ -9,6 +9,8 @@
   ],
   "labels": ["dependencies"],
   "schedule": ["before 9am on monday"],
+  "platformAutomerge": false,
+  "commitBody": "Signed-off-by: {{{gitAuthor}}}",
   "npm": {
     "minimumReleaseAge": "3 days"
   },
@@ -22,10 +24,9 @@
   },
   "packageRules": [
     {
-      "description": "Third-party minors and patches automerge on green CI",
+      "description": "Third-party minors and patches merge once every check on the PR passes (Renovate merges, not GitHub)",
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "automerge": true,
-      "platformAutomerge": true
+      "automerge": true
     },
     {
       "description": "Majors always wait for a person",
